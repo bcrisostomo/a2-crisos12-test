@@ -13,7 +13,8 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-session": "^1.15.0",
-    "mongoose": "^4.8.6"
+    "mongoose": "^4.8.6",
+    "ejs": ""
   },
   "homepage": "https://github.com/CSC309-spring2017/a2-crisos12#readme"
 }

@@ -12,26 +12,28 @@ var UserSchema = new Schema(
         _id: {
             type: Number
         },
-        first_name: {
-            type: String, required: true
+        firstname: {
+            type: String, default: ""
         },
-        last_name: {
-            type: String, required: true
+        lastname: {
+            type: String, default: ""
         },
         username: {
-            type: String, required: true
+            type: String, required: true, unique: true
         },
         sex: {
-            type: String, enum: ['M', 'F'], required: true
+            type: String, enum: ['M', 'F'], default:""
         },
         age: {
-            type: Number, required: true
+            type: Number, default: 0
         },
     },
     {
         collection: 'users'
     }
 );
+
+mongoose.connect('mongodb://localhost/users');
 
 // Doc for Mongoose Models: http://mongoosejs.com/docs/models
 module.exports = mongoose.model('users', UserSchema);

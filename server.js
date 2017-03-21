@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -8,9 +10,10 @@ app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/'));
 
 //Set up default db connection and create error handlers
-var mongoDB = 'mongodb://127.0.0.1/bcrisostomoA2';
-mongoose.connect(mongoDB);
-mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+//var mongoDB = 'mongodb://127.0.0.1/bcrisostomoA2';
+//var mongoDB = 'mongodb://localhost/tas';
+//mongoose.connect(mongoDB);
+//mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 //Database models
 var Users = require('./models/User');
@@ -20,6 +23,8 @@ app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/'));
 
 // Set views path, template engine, and default layout
+app.engine('.html', require('ejs').__express);
+app.set('views', __dirname);
 app.set('view engine', 'html');
 
 // Set up to use a session
@@ -42,22 +47,67 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 Controller Functions
 ============================================================================
 */
-// An array to store chat messages.  We will only store messages
-// as long as the server is running.
-var msgs = [];
 
+
+/*========================
+USERS
+==========================
+*/  
 // The user name is stored in the session 
-function getName(req, res) {
-  if (req.session.name) {
-    return res.json({ name: req.session.name });
-  }
-  else {
-    return res.json({ name: '' });
-  }
+function getUsers(req, res) {
+   
+    //Query to find all the users that satisfy req.query
+    //If req.query is empty, get all users    
+    Users.find(req.query,function(err, result) {
+        if (err) throw err;
+        
+        //res.render('index', {errors: {}, user: JSON.stringify(result)});
+        
+        //return a JSON object containing a field users which is an array of User Objects.
+        return res.json({users: result});
+
+                          
+    }).sort({username: 1}); //Sort the query with username ascending
+
+/* CAN DELETE LATER
+
+   //If there is no query, push all users from db in the user array
+   if (Object.keys(req.query).length === 0){
+   //Get all users in an array under the key users (usernames ascending)
+        Users.find({ "firstname": "Tom" 
+            },
+
+            //add the users to user array
+            function (err, result) {
+                if (err) throw err;
+                //req.session.name = username;
+                //Push it into the array if there is a result.length
+                users.push(result);
+                console.log("No query, but I got this from the query %s\n", result);
+                console.log(users);
+                });
+    } else {
+
+        
+        Users.find({ $query:{username: req.query.username, firstname: req.query.firstname, 
+        lastname: req.query.lastname}, sex: req.query.sex, age: req.query.age, $orderby: {username : 1} 
+            },
+
+            //add the users to user array
+            function (err, result) {
+                if (err) throw err;
+                users.push(result);
+                console.log("I got this from the query %s\n", result);
+                console.log(users);
+                });
+    }
+*/
 }
 
+//Doesnt go here for post request
 // Add the username to the session
-function setName(req, res) {
+function setUsers(req, res) {
+  console.log(req.body);
   if(!req.body.hasOwnProperty('name')) {
     res.statusCode = 400;
     return res.json({ error: 'Invalid message' });
@@ -79,14 +129,6 @@ function logout(req, res) {
   })
 }
 
-// Get a message from a user
-function addMessage(req, res) {
-    // We find the message using the "text" key in the JSON object
-    var msg = req.body.text;
-    console.log("addmsg:" + req.body.text + " " + Date() + " " +req.session.name);
-    msgs.push(req.body.text + " " + Date() + " " + req.session.name);
-    res.send('Success'); 
-}
 
 // Get the full list of messages
 function getMessages(req, res) {
@@ -100,10 +142,10 @@ Routes Declaration
 ============================================================================
 */
 
-app.get('/name', getName);
-app.post('/name', setName);
+app.get('/users', getUsers);
+
+app.post('/users', setUsers);
 app.get('/logout', logout);
-app.post('/addmsg', addMessage);
 app.get('/messages', getMessages);
 
 

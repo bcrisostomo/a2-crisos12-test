@@ -1,0 +1,19 @@
+{
+  "name": "rate_app",
+  "version": "0.0.2",
+  "description": "Rating Application",
+  "main": "server.js",
+  "scripts": {
+       "test": "echo \"Error: no tests \" && exit 1",
+       "start": "node server.js"
+  },
+   "author": "bcrisostomo",
+   "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-session": "^1.15.0",
+    "mongoose": "^4.8.6"
+  },
+  "homepage": "https://github.com/CSC309-spring2017/a2-crisos12#readme"
+}

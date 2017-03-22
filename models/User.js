@@ -10,7 +10,7 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema(
     {
         _id: {
-            type: Number
+            type: String
         },
         firstname: {
             type: String, default: ""
@@ -33,7 +33,7 @@ var UserSchema = new Schema(
     }
 );
 
-mongoose.connect('mongodb://localhost/users');
+// mongoose.connect('mongodb://localhost/users');
 
 // Doc for Mongoose Models: http://mongoosejs.com/docs/models
 module.exports = mongoose.model('users', UserSchema);

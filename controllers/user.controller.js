@@ -1,4 +1,5 @@
 var Users = require('../models/User');
+var Reviews = require('../models/Reviews');
 
 function getUser(req, res) {
    
@@ -55,65 +56,83 @@ function getUser(req, res) {
 
 /*Add the user into the db if valid*/
 function addUser(req, res) {
-    
-    //Return 403 status if username provided exists or is not provided
-    if (!req.body.username){ //If username is not provided return 403 status
-        res.statusCode = 403;
-        return res.json({ error: 'Invalid: No username specified' });
+        
+        if (!req.body.username){ //If username is not provided return 403 status
+        
+            res.statusCode = 403;
+            return res.json({ error: 'Invalid: No username specified' });
 
-    } else { //Check if it already exists, if yes, error, if not, add it
-
-      Users.findOne({"username": req.body.username},
-          function(err, result) {
-                  if (err) throw err;
-                
-                  if(result){
-                     res.statusCode = 403;
-                     return res.json({ error: 'Invalid: Username already exists!' });
-                  } else {
-                    //Add the user into the db and return status code 200 and the new user
-                    var user = new Users();
-                    user.username = req.body.username,
-                    user.firstname = req.body.firstname,
-                    user.lastname = req.body.lastname,
-                    user.sex = req.body.sex,
-                    user.age = req.body.age
-                    user.save(function(err) {
-                        if (err) throw err;
-                        res.statusCode = 200;
-                        return res.json(user);
-                    });
+        } else { //Check if it already exists, if yes, error, if not, add it
+         
+             Users.findOne({"username": req.body.username},
+                  function(err, result) {
+                    
+                        if(err) {
+                          console.log(err);
+                        }
+                      
+                        if(result != null){
+                           res.statusCode = 403;
+                           return res.json({ error: 'Invalid: Username already exists!' });
+                        } else {
 
 
-                  }
-        });
+                            var user = new Users(req.body, {versionKey: false});
+                            //console.log(req.body);
+                            user.save(function(err, users) {
+                            if(err) {
+                              console.log(err);
+                            }
 
-      
-    }
-    
-  
+                            res.statusCode = 200;
+                            return res.json(user);
+                            });
+
+                            //Check if the user is added -- testing purposes
+                            /*Users.find(function(err, users) {
+                              if(err) {
+                              console.log("err")
+                              }
+                              
+                         });*/
+                      }
+                 });
+        }
 }
+
+
+
 
 /*Delete the user with userid as well as all of their reviews*/
 function deleteUser(req, res) {
-  
   //Check if the id is valid and exists in db
-   Users.findOne({"_id":req.query.id},
+   Users.find({"_id": req.query.id},
 
         function(err, result) {
-            if (err) throw err;
-          
-            if(result){
+            if (err){
+              console.log(err);
+
+            } 
+            
+            //If the user exists, delete the user and his/her reviews
+            if(result != null){
                 //Remove the user from the db
-                Users.remove({"_id": req.query.id}, {justOne: true});
+                Users.remove({"_id": req.query.id}, function(err, result){
+                      res.json({message: 'Accounts Deleted!'});
+                });
+
                 //Remove all the users reviews
-                Reviews.remove({"userID": req.query.id});
-               return res.json("Deleted user %s\n", result);
+                Reviews.remove({"userID": req.query.id}, function(err, result){
+                      //res.json({message: 'Reviews Deleted!'});
+                });            
+                
+               
             } else { //return 404 status if userid does not exist
-              res.statusCode = 404;
-              return res.json({ error: 'Invalid: User does not exist' });
+                res.statusCode = 404;
+                return res.json({ error: 'Invalid: User does not exist' });
             }
-    });
+        });   
+    
     
    
 
@@ -151,12 +170,12 @@ function updateUser(req, res){
                 user.save(function(err, user){
                       if (err) throw err;
                       res.statusCode = 200;
-                      return res.json("Updated user to %s\n", user);
+                      return res.json(user);
                     });
 
 
 
-               return res.json("Deleted user %s\n", result);
+               //console.log("Updated %s\n", user);
             } else { //return 404 status if userid does not exist
               res.statusCode = 404;              
               return res.json({ error: 'Invalid: User does not exist: Cannot update' });

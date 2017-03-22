@@ -13,6 +13,7 @@ app.use(express.static(__dirname + '/'));
 //Set up default db connection and create error handlers
 var mongoDB = 'mongodb://localhost/ratingApp';
 mongoose.connect(mongoDB);
+mongoose.Promise = require('bluebird');
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 //Database models
@@ -44,7 +45,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 
 // Definition of Routing of back-end.
-app.use('/api', routes);
+app.use('/', routes);
 
 
 

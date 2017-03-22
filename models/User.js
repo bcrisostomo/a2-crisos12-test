@@ -9,8 +9,8 @@ var Schema = mongoose.Schema;
 */
 var UserSchema = new Schema(
     {
-        _id: {
-            type: String
+        __id: {
+            type: String//, required:true
         },
         firstname: {
             type: String, default: ""
@@ -22,15 +22,16 @@ var UserSchema = new Schema(
             type: String, required: true, unique: true
         },
         sex: {
-            type: String, enum: ['M', 'F'], default:""
+            type: String, default:""
         },
-        age: {
+       age: {
             type: Number, default: 0
         },
     },
     {
         collection: 'users'
     }
+
 );
 
 // mongoose.connect('mongodb://localhost/users');

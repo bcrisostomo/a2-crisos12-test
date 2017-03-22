@@ -9,7 +9,7 @@ var Schema = mongoose.Schema;
 */
 var ReviewsSchema = new Schema(
     {
-        _id: {
+        __id: {
             type: String
         },
         userID: {

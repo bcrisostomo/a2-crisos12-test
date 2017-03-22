@@ -8,7 +8,7 @@ const userRoutes = require('./user.route');
 const usersRoutes = require('./users.route');
 
 
-const storeRoutes = require('./store.route');
+const storeRoutes = require('./stores.route');
 
 
 

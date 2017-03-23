@@ -106,40 +106,41 @@ function addUser(req, res) {
 /*Delete the user with userid as well as all of their reviews*/
 function deleteUser(req, res) {
   //Check if the id is valid and exists in db
-   Users.find({"_id": req.query.id},
+   
+   Users.findOne({"_id": req.query.id},
 
         function(err, result) {
             if (err){
               console.log(err);
 
             } 
-            
+            //console.log(result);
             //If the user exists, delete the user and his/her reviews
-            if(result != null){
+            if(result){
                 //Remove the user from the db
-                Users.remove({"_id": req.query.id}, function(err, result){
-                      res.json({message: 'Accounts Deleted!'});
-                });
+                Users.remove({"_id": req.query.id}, );/*;{
+                      //res.json({message: 'Accounts Deleted!'});
+                });*/
 
                 //Remove all the users reviews
-                Reviews.remove({"userID": req.query.id}, function(err, result){
+                Reviews.remove({"userID": req.query.id}, );/*function(err, result){
                       //res.json({message: 'Reviews Deleted!'});
-                });            
+                });*/
+
+                res.sendStatus(200);            
                 
+                //res.json({message: 'User and Reviews Deleted!'});
                
             } else { //return 404 status if userid does not exist
                 res.statusCode = 404;
                 return res.json({ error: 'Invalid: User does not exist' });
             }
-        });   
-    
-    
-   
-
- 
+        });    
 
 }
 
+
+/*Update the user with specified id*/
 function updateUser(req, res){
     Users.findOne({"_id":req.query.id},
 
@@ -182,7 +183,7 @@ function updateUser(req, res){
             }
     });
 
-  }
+}
 
 
 

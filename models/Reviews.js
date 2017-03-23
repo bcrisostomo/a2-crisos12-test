@@ -23,7 +23,7 @@ var ReviewsSchema = new Schema(
         },
         
         comment: {
-            type: String
+            type: String, default: ""
         },
     
     },

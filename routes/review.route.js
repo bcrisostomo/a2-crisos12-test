@@ -3,6 +3,9 @@ const router = express.Router();
 const reviewCtrl = require('../controllers/review.controller');
 
 
+router.get('/', function(req, res, next){
+    res.render('pages/review');
+});
 
 router.get('/', function(req, res, next){
     reviewCtrl.getReview(req, res);

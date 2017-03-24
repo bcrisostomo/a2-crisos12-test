@@ -78,7 +78,8 @@ function deleteStore(req, res) {
             if(result){
                 //Remove the user from the db
                 Stores.remove({"_id": req.query.id}, function(err, result){
-                      //res.json({message: 'Store Deleted!'});
+                      res.status(200);
+                      res.json({message: 'Store and Reviews Deleted!'});
                 });
 
                 //Remove all the stores reviews
@@ -86,7 +87,7 @@ function deleteStore(req, res) {
                       //res.json({message: 'Reviews Deleted!'});
                 });
 
-                res.json({message: 'Store and Reviews Deleted!'});            
+                //res.json({message: 'Store and Reviews Deleted!'});            
                 
                
             } else { //return 404 status if userid does not exist

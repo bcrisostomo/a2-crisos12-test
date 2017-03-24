@@ -5,10 +5,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var routes = require('./routes/index.routes');
-
 var app = express();
-app.use(express.static(__dirname + '/assets'));
-app.use(express.static(__dirname + '/'));
 
 //Set up default db connection and create error handlers
 var mongoDB = 'mongodb://localhost/ratingApp';
@@ -19,15 +16,17 @@ mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection 
 //Database models
 var Users = require('./models/User');
 var Reviews = require('./models/Reviews');
+var Stores = require('./models/Store');
+
+
+// Set views path, template engine, and default layout
+app.engine('.html', require('ejs').__express);
+//app.set('views', __dirname);
+app.set('view engine', 'html');
 
 // Serve directory for css/js/images
 app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/'));
-
-// Set views path, template engine, and default layout
-app.engine('.html', require('ejs').__express);
-app.set('views', __dirname);
-app.set('view engine', 'html');
 
 // Set up to use a session
 app.use(session({

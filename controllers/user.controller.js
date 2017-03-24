@@ -1,6 +1,9 @@
 var Users = require('../models/User');
 var Reviews = require('../models/Reviews');
 
+
+
+
 function getUser(req, res) {
    
     //If they provided a query which does not include username and id, 
@@ -41,7 +44,6 @@ function getUser(req, res) {
                   if (err) throw err;
                 
                   if(result){
-                     //console.log("2" + result);
                      return res.json(result);
                   } else {
                     res.statusCode = 404;
@@ -56,6 +58,8 @@ function getUser(req, res) {
 
 /*Add the user into the db if valid*/
 function addUser(req, res) {
+
+        console.log(req.body.username);
         
         if (!req.body.username){ //If username is not provided return 403 status
         
@@ -104,7 +108,7 @@ function addUser(req, res) {
 
 
 /*Delete the user with userid as well as all of their reviews*/
-function deleteUser(req, res) {
+function deleteUser(req, res, next) {
   //Check if the id is valid and exists in db
    
    Users.findOne({"_id": req.query.id},
@@ -118,26 +122,26 @@ function deleteUser(req, res) {
             //If the user exists, delete the user and his/her reviews
             if(result){
                 //Remove the user from the db
-                Users.remove({"_id": req.query.id}, );/*;{
-                      //res.json({message: 'Accounts Deleted!'});
-                });*/
+                Users.remove({"_id": req.query.id}, function(err, result){
+                      res.status(200);
+                      res.json({message: 'Accounts and Reviews Deleted!'});
+                });
 
                 //Remove all the users reviews
-                Reviews.remove({"userID": req.query.id}, );/*function(err, result){
+                Reviews.remove({"userID": req.query.id}, function(err, result){
                       //res.json({message: 'Reviews Deleted!'});
-                });*/
-
-                res.sendStatus(200);            
+                });
                 
-                //res.json({message: 'User and Reviews Deleted!'});
-               
+
+                
             } else { //return 404 status if userid does not exist
-                res.statusCode = 404;
+                res.status(404);
                 return res.json({ error: 'Invalid: User does not exist' });
             }
         });    
 
 }
+
 
 
 /*Update the user with specified id*/

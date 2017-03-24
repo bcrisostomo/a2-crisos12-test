@@ -3,6 +3,9 @@ const router = express.Router();
 const storeCtrl = require('../controllers/store.controller');
 
 
+router.get('/', function(req, res, next){
+    res.render('pages/store');
+});
 
 router.get('/', function(req, res, next){
     storeCtrl.getStore(req, res);

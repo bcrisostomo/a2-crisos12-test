@@ -60,6 +60,7 @@ function getUser(req, res) {
 function addUser(req, res) {
 
         console.log(req.body.username);
+        console.log(req.body);
         
         if (!req.body.username){ //If username is not provided return 403 status
         
@@ -90,8 +91,10 @@ function addUser(req, res) {
 
                             res.statusCode = 200;
                             return res.json(user);
+                            //render instead?
                             });
 
+                            //
                             //Check if the user is added -- testing purposes
                             /*Users.find(function(err, users) {
                               if(err) {

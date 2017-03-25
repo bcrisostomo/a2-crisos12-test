@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pinecone</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="../../assets/styles/default.css">
+    <link rel="stylesheet" href="../../assets/styles/login.css">
+</head>
+
+<body>
+
+    <%- include('../partials/header') %>
+
+    <!-- start of main content of page -->
+    <main class="container-fluid" id="main">
+
+        <section id="login-singup" class="center-block">
+            <h5>Login or Sign Up Form</h5>
+            <div class="login-wrapper">
+                <!-- options to either sign up or login -->
+                <ul class="tab-options">
+                    <li class="tab active" value="#login">login</li>
+                    <li class="tab" value="#signup">sign up</li>
+                </ul>
+
+                <!-- log in form -->
+                <article id="login">
+                    <h3>Hello Again!</h3>
+                    <form action="" method="POST" enctype="multipart/form-data" id="login-form">
+                        <div class="input-group">
+                            <span class="input-group-addon form-btn" id="basic-addon1">
+                                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                            </span>
+                            <input name="email" type="email" class="form-control form-input"
+                                   placeholder="email" aria-describedby="basic-addon1" required>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-btn" id="basic-addon2">
+                                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                            </span>
+                            <input name="password" type="password" class="form-control form-input"
+                                   placeholder="password" aria-describedby="basic-addon2" required>
+                        </div>
+                        <span class="btn-wrapper input-group-btn">
+                            <button class="btn btn-block form-btn" type="submit" id="login-btn">Login</button>
+                        </span>
+                    </form>
+                </article>
+
+                <!-- sing up in form -->
+                <article id="signup">
+                    <h3>Make a new account</h3>
+                    <form action="" method="POST" enctype="multipart/form-data" id="signup-form">
+                        <div class="input-group">
+                            <span class="input-group-addon form-btn" id="basic-addon3">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </span>
+                            <input name="first_name" type="text" class="form-control form-input"
+                                   placeholder="first name" aria-describedby="basic-addon3" required>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-btn" id="basic-addon7">
+                                <i class="fa fa-user-o" aria-hidden="true"></i>
+                            </span>
+                            <input name="last_name" type="text" class="form-control form-input"
+                                   placeholder="last name" aria-describedby="basic-addon7" required>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-btn" id="basic-addon5">
+                                <i class="fa fa-envelope-o" aria-hidden="true" required></i>
+                            </span>
+                            <input name="email" type="email" class="form-control form-input"
+                                   placeholder="email" aria-describedby="basic-addon5" required>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-btn" id="basic-addon6">
+                                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                            </span>
+                            <input name="password" type="password" class="form-control form-input"
+                                   placeholder="password" aria-describedby="basic-addon6" required>
+                        </div>
+                        <span class="btn-wrapper input-group-btn">
+                            <button id="signup-btn" class="btn btn-block form-btn" type="submit">Sign Up</button>
+                        </span>
+                    </form>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="../../assets/scripts/main.js"></script>
+    <script src="../../assets/scripts/login.js"></script>
+</body>
+</html>

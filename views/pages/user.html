@@ -1,38 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <title>Add User</title>
+    <link rel="stylesheet" href="/assets/styles/main.css">
     
-    <!-- Stylelist -->
-    <link rel="stylesheet" href="/assets/styles/user.css">
-
 </head>
 <body>
 
-<div class="topnav" id="myTopnav">
-  <a href="../../">Home</a>
-  <a href="/user">CRUD Individual Users</a>
-  <a href="/store">CRUD Indiviudal Stores</a>
-  <a href="/review">CRUD Individual Reviews</a>
-  <a href="/users">Get all users</a>
-  <a href="/stores">Get all stores</a>
-  <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
-</div>
+  <main id="main">
+    <div class="container">
+    <h3 id="h2">Add a user</h3>
+    <form  id="form" action="" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label> 1) Username:</label>
+        <input type="text" name="username" placeholder= "username" required="">
+      </div>
 
-<div style="padding-left:50px">
-   <h3 class="welcome">Individual Users<b><span class="name"></span></b></h3>
-    
-    <div> Select an option:</div>
-    <button id="get">Get a user</button>
-    <button id="add">Add a user</button>
-    <button id="delete">Delete a user</button>
-    <button id="update">Update a user</button>
-</div>
+      <div class="form-group">
+        <label> 2) First name:</label>
+        <input name="lastname" type="text"> 
+       
+      </div>
+
+      <div class="form-group">
+        <label> 3) Last name:</label>
+        <input name="firstname" type="text"> 
+       
+      </div>
+
+      <div class="form-group">
+        <label> 4) Gender/Sex:</label>
+        <input name="sex" type="text"> 
+       
+      </div>
+
+      <div class="form-group">
+        <label> 5) Age:</label>
+        <input name="age" type="number"> 
+       
+      </div>
+
+      <input type="submit" id="submit-btn" value="Submit">
+    </form>
+    </div>
 
 
 
-<script src="../../assets/scripts/user.js"></script>
+   <div class="content-box">
+
+        <h3 id="h2">Get a user</h3>
+        <div class="content">
+            <input type="text" name="userid" placeholder="userID"> 
+            <button id="get-btn" onclick="getUser()"class="select get-btn">Get User</button>
+            
+            </ul>
+        </div>
+    </div> 
+  </main>
+
+<script>
+  document.getElementById("get-btn").onclick = function () {
+        //location.reload();
+        var data = $('input[name="userid"]').val();
+
+        if(data == undefined){
+            var url = '/user' + $(this).val();
+        } else{
+            var url = '/user?id=' + $(this).val();
+        }
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: data,
+            success: function (ret) {
+                document.write(ret);
+            },
+            error: function (err) {
+                document.write(err.responseText);
+            }
+        });
+    };
+
+</script>
+
+<script src="../../assets/scripts/add_user.js"></script>
+
+  
 
 
-
+  
 </body>
 </html>
